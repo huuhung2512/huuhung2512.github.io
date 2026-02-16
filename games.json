@@ -1,0 +1,29 @@
+[
+    {
+        "title": "PEIH NAUT",
+        "genre": "HORROR",
+        "image": "Asset/Art/thumb_peihnaut.png",
+        "video": "Asset/Video/peihnaut_gameplay.mp4",
+        "url": "https://itch.io/embed-upload/11431346?color=767a68",
+        "width": 1024,
+        "height": 740
+    },
+    {
+        "title": "DREAM FANTASY",
+        "genre": "RPG",
+        "image": "Asset/Art/thumb_dreamfantasy.png",
+        "video": "Asset/Video/dreamfantasy_gameplay.mp4",
+        "url": "https://itch.io/embed-upload/13612583?color=333333",
+        "width": 1080,
+        "height": 740
+    },
+    {
+        "title": "DOGEMASTER V2",
+        "genre": "ACTION",
+        "image": "Asset/Art/thumb_dogemaster.png",
+        "video": "Asset/Video/dogemaster_gameplay.mp4",
+        "url": "https://itch.io/embed-upload/13593577?color=333333",
+        "width": 440,
+        "height": 570
+    }
+]

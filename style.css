@@ -1,0 +1,662 @@
+:root {
+    --neon-green: #0f0;
+    --neon-pink: #f0f;
+    --neon-blue: #0ff;
+    --bg-color: #050510;
+    --panel-bg: rgba(10, 10, 20, 0.85);
+    --border-color: #333;
+    --text-main: #eee;
+    --scanline-color: rgba(0, 0, 0, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-image:
+        linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center bottom;
+}
+
+/* --- FONTS --- */
+h1,
+.level-badge,
+.panel-title,
+.cartridge-title,
+.modal-bar,
+.hud-btn {
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* --- CRT & SCANLINE EFFECTS --- */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.2) 50%,
+            rgba(0, 0, 0, 0.2));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1000;
+    animation: scanlineScroll 10s linear infinite;
+}
+
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+    z-index: 1001;
+}
+
+@keyframes scanlineScroll {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+/* --- LAYOUT --- */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.hud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--neon-blue);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    background: rgba(0, 20, 20, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+/* --- CAT GAME STYLES --- */
+/* --- START SCREEN --- */
+#start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--neon-green);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* --- CAT GAME STYLES --- */
+#cat-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Let clicks pass through to cats */
+    z-index: 50;
+}
+
+.pixel-cat {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    /* Image set by JS */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.1s;
+    filter: drop-shadow(0 0 2px white) drop-shadow(0 0 5px var(--neon-blue));
+}
+
+/* Clear the emoji fallback if it existed in previous CSS */
+.pixel-cat::after {
+    content: none;
+}
+
+.pixel-cat:hover {
+    transform: scale(1.2);
+    z-index: 100;
+}
+
+.giant-cat {
+    background-image: url('Asset/Art/boss.png') !important;
+    width: 200px !important;
+    height: 300px !important;
+    filter: drop-shadow(0 0 10px yellow) drop-shadow(0 0 30px var(--neon-pink)) !important;
+    animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+.explosion-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--neon-pink);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: explode 0.8s forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar-frame {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 4px solid var(--text-main);
+    background: #000;
+}
+
+.pixel-avatar {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+.level-badge {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background: var(--neon-green);
+    color: #000;
+    padding: 5px;
+    font-size: 0.6rem;
+    border: 2px solid #000;
+}
+
+.player-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-name {
+    font-size: 1.5rem;
+    color: var(--neon-blue);
+    text-transform: uppercase;
+}
+
+.class-info {
+    font-size: 0.9rem;
+    color: var(--text-main);
+    opacity: 0.8;
+}
+
+/* Status Bars */
+.health-bar-container,
+.xp-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.bar-bg {
+    width: 150px;
+    height: 12px;
+    background: #333;
+    border: 1px solid #555;
+    position: relative;
+}
+
+.bar-fill {
+    height: 100%;
+    box-shadow: 0 0 5px currentColor;
+}
+
+.hp-fill {
+    width: 85%;
+    background: var(--neon-pink);
+}
+
+.xp-fill {
+    width: 45%;
+    background: var(--neon-green);
+}
+
+/* Social HUD */
+.social-hud {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    /* Allow wrapping on small screens */
+    justify-content: center;
+    /* Center items if wrapped */
+}
+
+.hud-btn {
+    text-decoration: none;
+    color: var(--text-main);
+    border: 2px solid var(--text-main);
+    padding: 10px;
+    font-size: 0.7rem;
+    transition: all 0.2s;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hud-btn:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 5px 5px 0px rgba(0, 255, 255, 0.5);
+    transform: translate(-2px, -2px);
+}
+
+.hud-btn.muted {
+    border-color: #555;
+    color: #888;
+}
+
+/* --- CONTENT GRID --- */
+.content-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 2px solid var(--border-color);
+    padding: 20px;
+    position: relative;
+}
+
+.panel::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    background: transparent;
+    border: 2px solid var(--neon-blue);
+    opacity: 0.3;
+}
+
+.panel-title {
+    color: var(--neon-green);
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed var(--neon-green);
+    padding-bottom: 10px;
+}
+
+/* Skill Tree */
+.skill-list {
+    list-style: none;
+}
+
+.skill-item {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.skill-dots {
+    color: #333;
+    /* Dark/Empty color base */
+    font-size: 0.8rem;
+}
+
+.skill-dots .filled {
+    color: var(--neon-blue);
+    /* Active color */
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.terminal-bio {
+    margin-top: 30px;
+    background: #000;
+    padding: 15px;
+    border: 1px solid var(--neon-green);
+    color: var(--neon-green);
+    font-family: monospace;
+    font-size: 0.9rem;
+    min-height: 150px;
+}
+
+.terminal-header {
+    background: var(--neon-green);
+    color: #000;
+    padding: 2px 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Game Selection */
+.games-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.game-section-title {
+    color: var(--neon-pink);
+    font-family: 'Press Start 2P';
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--neon-pink);
+    padding-bottom: 5px;
+    text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.game-grid-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.game-cartridge {
+    background: #222;
+    border-radius: 10px 10px 0 0;
+    border: 4px solid #444;
+    border-bottom: 10px solid #333;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.game-cartridge:hover {
+    transform: translateY(-10px);
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.cartridge-label {
+    background: linear-gradient(135deg, #333, #111);
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cartridge-art {
+    height: 160px;
+    background-color: #000;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+    border: 2px solid #555;
+    position: relative;
+    /* For video overlay */
+    overflow: hidden;
+
+    /* Sticker/Glow Effect like Cats */
+    image-rendering: pixelated;
+    transition: all 0.2s ease;
+    filter: drop-shadow(0 0 2px white) drop-shadow(0 0 5px var(--neon-blue));
+}
+
+.game-cartridge:hover .cartridge-art {
+    filter: drop-shadow(0 0 5px white) drop-shadow(0 0 15px var(--neon-pink));
+    border-color: var(--neon-pink);
+}
+
+/* Portrait Mode Adjustments */
+.game-cartridge.portrait .cartridge-art {
+    height: 250px;
+    /* Taller for vertical games */
+    background-size: contain;
+    /* Fit the whole image */
+    background-repeat: no-repeat;
+}
+
+.cartridge-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.game-cartridge:hover .cartridge-video {
+    opacity: 1;
+}
+
+.cartridge-title {
+    font-size: 0.8rem;
+    color: var(--text-main);
+    margin-bottom: 5px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.cartridge-meta {
+    font-size: 0.7rem;
+    color: #888;
+    text-align: center;
+}
+
+.play-indicator {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    background: var(--neon-pink);
+    color: #fff;
+    font-size: 0.7rem;
+    font-family: 'Press Start 2P';
+    padding: 5px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.game-cartridge:hover .play-indicator {
+    opacity: 1;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content-wrapper {
+    background: #111;
+    border: 4px solid var(--text-main);
+    box-shadow: 0 0 50px rgba(0, 255, 0, 0.2);
+    /* Allow width/height to fit content up to max */
+    width: fit-content;
+    max-width: 95vw;
+    height: auto;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-bar {
+    background: var(--text-main);
+    color: #000;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.modal-close-btn {
+    background: red;
+    border: 2px solid #000;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-family: 'Press Start 2P';
+}
+
+.iframe-container {
+    flex: 1;
+    background: #000;
+    display: flex;
+    /* Remove center alignment that causes top cut-off on overflow */
+    overflow: auto;
+    /* Allow scrolling if game is too big */
+    padding: 10px;
+}
+
+iframe {
+    border: none;
+    /* Use margin: auto to center when fit, but allow scroll when large */
+    margin: auto;
+    display: block;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hud-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .player-info {
+        flex-direction: column;
+    }
+
+    .social-hud {
+        width: 100%;
+        justify-content: center;
+    }
+}
