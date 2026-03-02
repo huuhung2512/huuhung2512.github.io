@@ -324,6 +324,17 @@ const profileData = {
             "url": "https://itch.io/embed-upload/13593577?color=333333",
             "width": 440,
             "height": 570
+        },
+        {
+            "title": "TODS",
+            "genre": "DEFEND",
+            "category": "2D",
+            "orientation": "portrait",
+            "image": "Asset/Art/thumail_TODS.png", // User provided
+            "video": "Asset/Video/TODS_gameplay.mp4",
+            "url": "https://itch.io/embed-upload/16668718?color=333333",
+            "width": 1920,
+            "height": 1080
         }
     ]
 };
