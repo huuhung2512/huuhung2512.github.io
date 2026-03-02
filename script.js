@@ -295,7 +295,7 @@ const profileData = {
         {
             "title": "PEIH NAUT",
             "genre": "HORROR",
-            "category": "3D",
+            "category": "2D",
             "orientation": "landscape",
             "image": "Asset/Art/thumail_Peih Nuat.png", // User provided
             "video": "Asset/Video/peihnaut_gameplay.mp4",
@@ -317,7 +317,7 @@ const profileData = {
         {
             "title": "DOGEMASTER V2",
             "genre": "ACTION",
-            "category": "2D",
+            "category": "3D",
             "orientation": "portrait",
             "image": "Asset/Art/thumail_DodgeMaster.png", // User provided
             "video": "Asset/Video/dogemaster_gameplay.mp4",
@@ -332,9 +332,9 @@ const profileData = {
             "orientation": "portrait",
             "image": "Asset/Art/thumail_TODS.png", // User provided
             "video": "Asset/Video/TODS_gameplay.mp4",
-            "url": "https://itch.io/embed-upload/16668718?color=333333",
-            "width": 1920,
-            "height": 1080
+            "url": "https://itch.io/embed-upload/16668866?color=333333",
+            "width": 1280,
+            "height": 720
         }
     ]
 };

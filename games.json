@@ -25,5 +25,14 @@
         "url": "https://itch.io/embed-upload/13593577?color=333333",
         "width": 440,
         "height": 570
+    },
+    {
+        "title": "TODS",
+        "genre": "DEFEND",
+        "image": "Asset/Art/thumail_TODS.png",
+        "video": "Asset/Video/TODS_gameplay.mp4",
+        "url": "https://itch.io/embed-upload/16668866?color=333333",
+        "width": 1280,
+        "height": 720
     }
 ]
